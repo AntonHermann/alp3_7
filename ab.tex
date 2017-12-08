@@ -1,0 +1,315 @@
+ % Dokumentenklasse
+\documentclass[
+% globale Schriftgröße
+    10pt,
+% setzt Absatzabstand hoch
+    parskip=half-,
+% Format
+    paper=a4,
+% lädt Sprachpakete
+    english,ngerman,
+]{scrartcl}
+
+% //////////////////// Pakete laden ////////////////////
+\usepackage{amsmath}
+% modifiziert amsmath
+\usepackage{mathtools}
+% mathematische Symbole, für \ceckmarks
+\usepackage{amssymb}
+% für proof
+\usepackage{amsthm}
+% für \mathscr
+\usepackage{mathrsfs}
+\usepackage{latexsym}
+% für bessere Worttrennung
+\usepackage{microtype}
+% Spracheinstellung
+\usepackage[ngerman]{babel}
+% für Quellcode
+\usepackage{verbatim}
+\usepackage{listings}
+% für Umlaute und Sonderzeichen in der Tex-Datei
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+% für Tabellen mit gleicher Spaltenbreite und automatischen Umbrüchen
+\usepackage{tabularx}
+\usepackage{fullpage}
+% für multirow in tabulars
+\usepackage{multirow}
+\usepackage{rotate}
+% um Farben zu benutzen, kann mehr als das Paket color
+\usepackage[cmyk,table]{xcolor} 
+% Verlinkungen
+\usepackage[
+% farbige Schrift, statt farbiger Rahmen
+    colorlinks,
+% verlinkt im Abb.Verzeichnis Seitenzahl statt Bildunterschrift
+    linktocpage,
+% setzt Farbe der Links auf blau
+    linkcolor=blue
+]{hyperref}
+% nur für digitale Anwendungen, url = "http://www.example.com"
+% für Webadressen wie e-mail usw.: "\url{http://www.example.com}"
+\usepackage{url}
+% für versch. Aufzählungezeichen wie z.B. a)
+\usepackage{enumerate}
+% folgt ein Leerzeichen nach einem \Befehl, wird es nicht verschluckt
+\usepackage{xspace}
+% für das Durchstreichen u.a. in Matheformeln mit \cancel
+\usepackage{cancel}
+% für \forloop und \whiledo
+\usepackage{ifthen}			
+
+% //////////////////// Syntaxhervorhebung ////////////////////
+\lstloadlanguages{Python, Haskell, [LaTeX]TeX, Java}
+\lstset{%
+% \scriptsize: die Fontgröße für den Quelltext
+   basicstyle=\footnotesize\ttfamily,
+% legt Farbe der Box fest
+   backgroundcolor = \color{bgcolour},
+% automatische Umbrüche nur nach Leerzeichen?
+   breakatwhitespace=false,
+% automatische Zeilenumbrüche?
+   breaklines=true,
+% die Überschrift steht oben, t = top
+   captionpos=t,
+% Formatierung der Kommentare
+   commentstyle=\color{codeblue}\ttfamily,
+% einfacher Rahmen um den Quelltext
+   frame=single,
+% Behalte Leerzeichen im Quelltext. Nützlich, um 
+% Einrückungen zu erhalten (benötigt eventuell columns=flexible)
+   keepspaces=true,
+% Formatierung der Schlüsselwörter
+   keywordstyle=\bfseries\ttfamily\color{codepurple},
+% Wohin mit den Zeilennummern?
+% mögliche Werte sind: none, left, right
+   numbers=left,
+% Formatierung der Zeilennummern
+   numberstyle=\tiny\color{codegreen},
+% Abstand zwischen Zeilennummern und Quelltext
+   numbersep=5pt,
+% nummeriert nur jede i-te Zeile
+   stepnumber=1,
+% Zeige alle Leerzeichen mit Hilfe von speziellen Unterstrichen;
+% überschreibt 'showstringspaces'
+   showspaces=false,
+% unterstreiche Leerzeichen nur in Zeichenketten
+   showstringspaces=false,
+% Zeige Tabulatoren in Zeichenketten mit Hilfe von speziellen
+% Unterstrichen
+   showtabs=false,
+   flexiblecolumns=false,
+% Schrittweite zwischen Zeilennummern. 
+% Der Wert 1 bedeutet, dass jede Zeile nummeriert wird.
+   tabsize=1,
+% Formatierung der Zeichenketten.
+   stringstyle=\color{orange}\ttfamily,	
+% leere Zeilen werden nicht nummeriert
+   numberblanklines=false,
+% Abstand zum linken Seitenrand
+   xleftmargin=1.2em,
+% Abstand zum rechten Seitenrand
+   xrightmargin=0.4em,
+   aboveskip=2ex, 
+}
+
+\lstdefinestyle{py}{%
+   language=Python,
+}
+\lstdefinestyle{hs}{%
+   language=Haskell,
+}
+\lstdefinestyle{tex}{%
+    language=[LaTeX]TeX,
+% Um LaTex im Quelltext einzufügen
+    escapeinside={\%*}{*)},
+% Hervorhebung der TeX-Schlüsselwörter
+    texcsstyle=*\bfseries\color{blue},
+    morekeywords={*,$,\{,\},\[,\],lstinputlisting,includegraphics,
+        rowcolor,columncolor,listoffigures,lstlistoflistings,
+        subsection,subsubsection,textcolor,tableofcontents,colorbox,
+        fcolorbox,definecolor,cellcolor,url,linktocpage,subtitle,
+        subject,maketitle,usetikzlibrary,node,path,addbibresource,
+        printbibliography},
+    numbers=none,
+    numbersep=0pt,
+    xleftmargin=0.4em,
+}
+
+\lstdefinestyle{java}{%
+    language=Java,
+    extendedchars=true,
+}
+
+% füge einen x64-Assembler Dialekt hinzu
+\lstdefinelanguage[x64]{Assembler}
+% basiert auf dem "x86masm" Dialekt
+   [x86masm]{Assembler} 
+ % zusätzliche Schlüsselwörter
+   {morekeywords={CDQE,CQO,CMPSQ,CMPXCHG16B,JRCXZ,LODSQ,MOVSXD, %
+                  POPFQ,PUSHFQ,SCASQ,STOSQ,IRETQ,RDTSCP,SWAPGS, %
+                  rax,rdx,rcx,rbx,rsi,rdi,rsp,rbp, %
+                  r8,r8d,r8w,r8b,r9,r9d,r9w,r9b}
+}
+
+\lstdefinestyle{c}{
+    language=c,
+    extendedchars=true,
+}
+
+% //////////////////// eigene Anweisungen ////////////////////
+% benötigt package xspace
+\newcommand\FU{Freie Universit\"at Berlin\xspace}
+\newcommand\gdw{g.\,d.\,w.\xspace}
+\newcommand\oBdA{o.\,B.\,d.\,A.\xspace}
+\newcommand\N{\mathbb{N}\xspace}
+\newcommand\Q{\mathbb{Q}\xspace}
+\newcommand\R{\mathbb{R}\xspace}
+\newcommand\Z{\mathbb{Z}\xspace}
+\newcommand\ohneNull{\ensuremath{\backslash\lbrace 0\rbrace}}% \{0}
+% Schreibt Befehl \dh in \dhALT um
+\let\dhALT\dh
+%renew überschreibt command \dh
+\renewcommand\dh{d.\,h.\xspace}
+\newcommand{\from}{\ensuremath{\colon}}
+\newcommand{\floor}[1]{\lfloor{#1}\rfloor}
+\newcommand{\ceil}[1]{\lceil{#1}\rceil}
+\newcommand{\abbrev}[2]{\expandafter\newcommand\csname
+                        #1\endcsname{#2\xspace}}
+\newcommand{\cclasss}[2]{\abbrev{#1}{\textsf{#2}}}
+\newcommand{\cclass}[1]{\cclasss{#1}{#1}}
+\cclasss{ccP}{P}
+\cclass{NP}
+\cclass{LOGSPACE}
+\cclass{NL}
+
+% //////////////// mathematische Funktionen ////////////////////
+\DeclareMathOperator{\True}{True}
+\DeclareMathOperator{\False}{False}
+
+% //////////////////// eigene Theoreme ////////////////////
+\newtheorem{theorem}{Satz}
+\newtheorem{corollary}[theorem]{Korollar}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{observation}[theorem]{Beobachtung}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{Literatur}[theorem]{Literatur}
+
+% konfiguriert proof
+\makeatletter
+\newenvironment{Proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item[\hskip\labelsep
+        \bfseries
+    #1\@addpunct{.}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+% //////////////////// eigene Farben ////////////////////
+\let\definecolor=\xdefinecolor
+\definecolor{FUgreen}{RGB}{153,204,0}
+\definecolor{FUblue}{RGB}{0,51,102}
+
+\definecolor{middlegray}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgray}{rgb}{0.8,0.8,0.8}
+\definecolor{orange}{rgb}{0.8,0.3,0.3}
+\definecolor{azur}{rgb}{0,0.7,1}
+\definecolor{yac}{rgb}{0.6,0.6,0.1}
+\definecolor{Pink}{rgb}{1,0,0.6}
+
+\definecolor{bgcolour}{rgb}{0.97,0.97,0.97}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.35,0.35,0.35}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{codeblue}{rgb}{0.4,0.5,1}
+
+% //////////////////// eigene Einstellungen ////////////////////
+
+% verhindert Einrückung der 1. Zeile eines Absatzes
+\parindent 0pt
+%
+% <-- Name der Übungsleitung eintragen
+\newcommand{\tutor}{William Surau}
+% <-- Nummer im KVV nachschauen
+\newcommand{\tutoriumNo}{4}
+% <-- Nummer des Übungszettels
+\newcommand{\ubungNo}{5}
+% <-- Name der Lehrveranstaltung eintragen
+\newcommand{\veranstaltung}{Algorithmen, Datenstrukturen und
+                            Datenabstraktion}
+% <-- z.B. SoSo 17, WiSe 17/18
+\newcommand{\semester}{WiSe 17/18}
+% <-- Hier die Namen eintragen
+\newcommand{\studenten}{Merlin Joseph \& Anton Oehler}
+% <-- Hier Anzahl der Aufgaben eintragen
+\newcommand{\aufgNo}{3}
+
+% /////////////////////// BEGIN DOKUMENT /////////////////////////
+\begin{document}
+% ////////////// Bepunktung //////////////
+%linksbündig 
+\makebox[\dimexpr\textwidth][l]{%
+    \begin{minipage}{\linewidth}
+        \newcounter{AufgNo}
+        \setcounter{AufgNo}{\aufgNo}
+        \stepcounter{AufgNo}   % AufgNo++
+        \newcounter{zahl}
+        \def\and{&\xspace}
+        \renewcommand{\arraystretch}{1.3}\setlength{\tabcolsep}{1em}
+        \begin{tabular}{*{\value{AufgNo}}{|c} |}
+            \hline
+             \setcounter{zahl}{1}
+             \whiledo{\value{zahl} < \value{AufgNo}}{%\AufgNo
+                 \thezahl\and\stepcounter{zahl}%
+             } $\sum$ \\ \hline
+             \setcounter{zahl}{1}
+             \whiledo{\value{zahl} < \value{AufgNo}}{%\AufgNo
+                 \phantom{X}\and\stepcounter{zahl}%
+            } \phantom{X}\\ \hline
+        \end{tabular}
+    \end{minipage}
+}
+% ////////////// Daten //////////////
+\begin{center}
+
+{\Large \veranstaltung, \semester}\par
+{\large Tutor\_in: \tutor, Tutorium \tutoriumNo}\par
+{\Large \"Ubung \ubungNo}\par
+{\large \studenten}\par
+\today
+\end{center}
+\vspace{-3ex}             % Abstand
+\rule{\linewidth}{0.8pt}  % horizontale Linie
+
+% /////////////////////// Aufgabe 1 /////////////////////////
+\section*{Aufgabe 1: Hashing: Implementierung}
+\begin{enumerate}[a)]
+\item
+	\begin{itemize}
+	\item Wird \texttt{hashcode()} mehrfach auf einem Objekt aufgerufen (ohne dass sich das Objekt gegenüber \texttt{equals()} ändert) so bleibt sein hashcode gleich.
+	\item Sind zwei Objekte nach \texttt{equals()} gleich, so müssen auch ihre hashcodes gleich sein.
+	\item Eigene Implementierungen von \texttt{equals()} (die u.U. effizienter sind, den Daten entsprechen, ...) können es notwendig machen, \texttt{hashcode()} auch zu überschreiben, um die in \texttt{hashcode()} beschriebenen Regeln einzuhalten.
+	\end{itemize}
+\item
+	\lstinputlisting[style=java, caption={Hashtable}]{src/Hashtable.java}
+\end{enumerate}
+\section*{Aufgabe 4: Kryptographische Hashfunktionen}
+\begin{enumerate}[a)]
+\item Kryptographische Hashfunktionen sind Hashfunktionen, die möglichst kollisionsresistens sind und sich nicht invertieren lassen (Es ist (quasi) unmöglich, aus einem Hash die ursprüngliche Eingabe oder eine Eingabe, die zum gleichen Hash führt zu berechnen)\\
+Beispiele: MD5 (unsicher), SHA-256, Whirlpool\\
+\item Das package \texttt{java.security} enthält die Klasse \texttt{MessageDigest}, welche mindestens die Hash-Funktionen MD5, SHA-1 und SHA-256 bereitstellen muss (jedoch je nach Implementierung noch mehr bereitstellen kann)
+\item
+\lstinputlisting[style=java, caption={Hashtable mit kryptografischer Hashfunktion}]{src/HashtableSHA.java}
+\end{enumerate}
+
+%\lstinputlisting[style=java, caption={Schnittstelle}]{src/Deque.java}
+%\lstinputlisting[style=java, caption={Eigener Ausnahmetyp}]{src/DequeEmptyException.java}
+%\lstinputlisting[style=java, caption={Implementation mit verketteter Liste}]{src/DequeLinkedList.java}
+%\lstinputlisting[style=java, caption={Implementation mit Array}]{src/DequeArray.java}
+
+\end{document}
